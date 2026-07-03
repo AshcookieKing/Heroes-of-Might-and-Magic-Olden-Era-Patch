@@ -13,9 +13,7 @@ Steam: https://steamcommunity.com/id/Imagundi/
 
 **[SimTurnsAI_Patch_Setup_v1.0.8.exe](https://github.com/AshcookieKing/Heroes-of-Might-and-Magic-Olden-Era-Patch/releases/latest/download/SimTurnsAI_Patch_Setup_v1.0.8.exe)**
 
-Один файл — скинул другу, он поставил. Всё.
-
-Если ссылка не открывается — зайдите в [Releases](https://github.com/AshcookieKing/Heroes-of-Might-and-Magic-Olden-Era-Patch/releases) и скачайте оттуда.
+Или [страница релизов](https://github.com/AshcookieKing/Heroes-of-Might-and-Magic-Olden-Era-Patch/releases) — там же v1.0.8.
 
 ---
 
