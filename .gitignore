@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# game files — never commit
+GameAssembly.dll
+GameAssembly.dll.*
+HeroesOldenEra.exe
+*.simturns_backup
+
+# old installer builds in game root (optional local copies)
+../SimTurnsAI_Patch_Setup_v1.0.0.exe
+../SimTurnsAI_Patch_Setup_v1.0.1.exe
+../SimTurnsAI_Patch_Setup_v1.0.2.exe
+../SimTurnsAI_Patch_Setup_v1.0.3.exe
+../SimTurnsAI_Patch_Setup_v1.0.4.exe

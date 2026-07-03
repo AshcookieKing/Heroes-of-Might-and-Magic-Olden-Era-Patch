@@ -1,0 +1,8 @@
+SimTurnsAI Patch for Heroes of Might and Magic: Olden Era
+Version: 1.0.5
+
+Developer: Imagundi
+Steam: https://steamcommunity.com/id/Imagundi/
+Boosty: https://boosty.to/imagundi
+
+Share: releases/SimTurnsAI_Patch_Setup_v1.0.5.exe
