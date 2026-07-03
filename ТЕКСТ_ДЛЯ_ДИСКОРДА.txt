@@ -1,12 +1,13 @@
 **SimTurnsAI Patch** — simultaneous не падает на ботах (Olden Era)
 
-Всем в лобби (хост + гости):
+Скачать: https://github.com/AshcookieKing/Heroes-of-Might-and-Magic-Olden-Era-Patch/releases/latest/download/SimTurnsAI_Patch_Setup_v1.0.8.exe
 
-1. Скачать `SimTurnsAI_Patch_Setup_v1.0.5.exe` из репозитория / релиза
-2. Закрыть игру, запустить установщик
-3. Указать папку с HeroesOldenEra.exe → Установить
+Всем в лобби:
+1. Скачать exe
+2. Закрыть игру, установить
+3. Указать папку с HeroesOldenEra.exe
 
-Без патча у всех — опять будет вырубаться realtime при встрече с ИИ.
-После обновления Steam — поставить заново.
+Без патча у всех — realtime снова падает на ботах.
+После патча Steam — поставить заново.
 
-Автор: Imagundi | Boosty в установщике на последнем экране
+Автор: Imagundi

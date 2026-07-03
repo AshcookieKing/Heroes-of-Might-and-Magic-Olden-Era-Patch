@@ -1,4 +1,4 @@
-$script:PatchVersion = "1.0.5"
+$script:PatchVersion = "1.0.8"
 $script:PatchRvas = @(0x22F6D00, 0x22F7310, 0x22F7B80)
 $script:OldRel = 0xBD
 $script:NewRel = 0xB7

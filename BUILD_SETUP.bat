@@ -28,5 +28,5 @@ if errorlevel 1 (
     exit /b 1
 )
 echo.
-echo Done: ..\SimTurnsAI_Patch_Setup_v1.0.5.exe
+echo Done: ..\SimTurnsAI_Patch_Setup_v1.0.8.exe
 pause

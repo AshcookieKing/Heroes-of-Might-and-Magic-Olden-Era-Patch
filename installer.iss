@@ -1,10 +1,10 @@
-; SimTurnsAI Patch installer v1.0.5
+; SimTurnsAI Patch installer v1.0.7
 
 #define MyAppName "SimTurnsAI Patch"
-#define MyAppVersion "1.0.5"
+#define MyAppVersion "1.0.8"
 #define MyAppPublisher "Imagundi"
 #define MyAppURL "https://steamcommunity.com/id/Imagundi/"
-#define MyBoostyURL "https://boosty.to/imagundi"
+#define MyBoostyURL "https://boosty.to/imagundi/donate"
 #define AssetDir "installer_assets"
 
 [Setup]
@@ -48,7 +48,8 @@ Name: "{autoprograms}\{#MyAppName}\Otkat patcha"; Filename: "{app}\restore_launc
 [Code]
 var
   GamePage: TInputDirWizardPage;
-  FinishPanel: TNewStaticText;
+  DonePage: TWizardPage;
+  DoneText: TNewStaticText;
   SupportLabel: TNewStaticText;
   SteamBtn: TNewButton;
   BoostyBtn: TNewButton;
@@ -63,6 +64,11 @@ const
 function GameFolderValid(const Path: String): Boolean;
 begin
   Result := FileExists(Path + '\HeroesOldenEra.exe') and FileExists(Path + '\GameAssembly.dll');
+end;
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  Result := (PageID = wpFinished);
 end;
 
 procedure SteamButtonClick(Sender: TObject);
@@ -86,50 +92,10 @@ begin
   WizardForm.WelcomeLabel1.Font.Color := ClTitle;
   WizardForm.WelcomeLabel1.Font.Style := [fsBold];
   WizardForm.WelcomeLabel2.Font.Color := ClBody;
-  WizardForm.FinishedLabel.Font.Color := ClBody;
   WizardForm.PageNameLabel.Font.Color := ClTitle;
   WizardForm.PageNameLabel.Font.Style := [fsBold];
   WizardForm.PageDescriptionLabel.Font.Color := ClBody;
   WizardForm.StatusLabel.Font.Color := ClBody;
-end;
-
-procedure LayoutFinishControls;
-var
-  TopY: Integer;
-begin
-  TopY := ScaleY(108);
-  FinishPanel.Top := TopY;
-  FinishPanel.Width := WizardForm.InnerPage.Width - ScaleX(12);
-
-  SupportLabel.Top := TopY + ScaleY(92);
-  SupportLabel.Width := WizardForm.InnerPage.Width - ScaleX(12);
-
-  SteamBtn.Top := TopY + ScaleY(132);
-  BoostyBtn.Top := TopY + ScaleY(168);
-end;
-
-procedure SetFinishExtrasVisible(Visible: Boolean);
-begin
-  FinishPanel.Visible := Visible;
-  SupportLabel.Visible := Visible;
-  SteamBtn.Visible := Visible;
-  BoostyBtn.Visible := Visible;
-  if Visible then
-    WizardForm.FinishedLabel.Visible := False;
-end;
-
-procedure CurPageChanged(CurPageID: Integer);
-begin
-  if CurPageID = wpFinished then
-  begin
-    LayoutFinishControls;
-    SetFinishExtrasVisible(True);
-  end
-  else
-  begin
-    SetFinishExtrasVisible(False);
-    WizardForm.FinishedLabel.Visible := True;
-  end;
 end;
 
 procedure InitializeWizard;
@@ -147,46 +113,54 @@ begin
   if not GameFolderValid(GamePage.Values[0]) then
     GamePage.Values[0] := '';
 
-  FinishPanel := TNewStaticText.Create(WizardForm);
-  FinishPanel.Parent := WizardForm.InnerPage;
-  FinishPanel.Left := ScaleX(0);
-  FinishPanel.AutoSize := False;
-  FinishPanel.WordWrap := True;
-  FinishPanel.Font.Color := ClBody;
-  FinishPanel.Caption :=
+  DonePage := CreateCustomPage(wpInstalling,
+    'Готово',
+    'Патч установлен');
+
+  DoneText := TNewStaticText.Create(DonePage);
+  DoneText.Parent := DonePage.Surface;
+  DoneText.Left := 0;
+  DoneText.Top := 0;
+  DoneText.Width := DonePage.SurfaceWidth;
+  DoneText.Height := ScaleY(118);
+  DoneText.AutoSize := False;
+  DoneText.WordWrap := True;
+  DoneText.Font.Color := ClBody;
+  DoneText.Caption :=
     'Патч установлен.' + #13#10 + #13#10 +
-    'Одновременные ходы больше не отключаются при встрече с ботами.' + #13#10 +
+    'Simultaneous turns больше не отключаются при встрече с ботами.' + #13#10 +
     'У живых игроков всё как в оригинале.' + #13#10 + #13#10 +
     'В мультиплеере патч нужен у всех.' + #13#10 +
-    'После обновления Steam — запустите установщик ещё раз.';
-  FinishPanel.Visible := False;
+    'После обновления Steam — запустите этот установщик снова.';
 
-  SupportLabel := TNewStaticText.Create(WizardForm);
-  SupportLabel.Parent := WizardForm.InnerPage;
-  SupportLabel.Left := ScaleX(0);
+  SupportLabel := TNewStaticText.Create(DonePage);
+  SupportLabel.Parent := DonePage.Surface;
+  SupportLabel.Left := 0;
+  SupportLabel.Top := ScaleY(124);
+  SupportLabel.Width := DonePage.SurfaceWidth;
+  SupportLabel.Height := ScaleY(28);
   SupportLabel.AutoSize := False;
   SupportLabel.WordWrap := True;
   SupportLabel.Font.Color := ClMuted;
-  SupportLabel.Caption := 'Автор: Imagundi. Патч бесплатный — если зашло, можно кинуть на печенье:';
-  SupportLabel.Visible := False;
+  SupportLabel.Caption := 'Автор: Imagundi. Патч бесплатный — если зашло, можно поддержать:';
 
-  SteamBtn := TNewButton.Create(WizardForm);
-  SteamBtn.Parent := WizardForm.InnerPage;
-  SteamBtn.Left := ScaleX(0);
-  SteamBtn.Width := ScaleX(175);
-  SteamBtn.Height := ScaleY(25);
+  SteamBtn := TNewButton.Create(DonePage);
+  SteamBtn.Parent := DonePage.Surface;
+  SteamBtn.Left := 0;
+  SteamBtn.Top := ScaleY(158);
+  SteamBtn.Width := ScaleX(170);
+  SteamBtn.Height := ScaleY(27);
   SteamBtn.Caption := 'Профиль Steam';
   SteamBtn.OnClick := @SteamButtonClick;
-  SteamBtn.Visible := False;
 
-  BoostyBtn := TNewButton.Create(WizardForm);
-  BoostyBtn.Parent := WizardForm.InnerPage;
-  BoostyBtn.Left := ScaleX(185);
-  BoostyBtn.Width := ScaleX(175);
-  BoostyBtn.Height := ScaleY(25);
-  BoostyBtn.Caption := 'Печенье на Boosty';
+  BoostyBtn := TNewButton.Create(DonePage);
+  BoostyBtn.Parent := DonePage.Surface;
+  BoostyBtn.Left := ScaleX(180);
+  BoostyBtn.Top := ScaleY(158);
+  BoostyBtn.Width := ScaleX(170);
+  BoostyBtn.Height := ScaleY(27);
+  BoostyBtn.Caption := 'Поддержать';
   BoostyBtn.OnClick := @BoostyButtonClick;
-  BoostyBtn.Visible := False;
 end;
 
 function NextButtonClick(CurPageID: Integer): Boolean;
@@ -235,8 +209,6 @@ end;
 russian.SetupWindowTitle=SimTurnsAI Patch
 russian.WelcomeLabel1=Установка патча
 russian.WelcomeLabel2=Патч для [name] [version].%n%nВ ваниле simultaneous turns вырубаются, когда вы видите бота — так же, как живого игрока. После патча у ИИ realtime остаётся, у людей без изменений.%n%nДальше укажите папку игры — всё остальное само.
-russian.FinishedHeadingLabel=Готово
-russian.FinishedLabel=
 russian.ButtonNext=Далее
 russian.ButtonInstall=Установить
 russian.ButtonFinish=Закрыть
